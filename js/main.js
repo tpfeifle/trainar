@@ -2,6 +2,12 @@
 
 var time_delay = 1;
 
+var markerRoot, loadCollada, avatar;
+var audio = new Audio('models/mp3/Hip Hop Dancing.mp3');
+var angle = 180;
+
+var removeEntity;
+var modelpath = 'Archiv-Movements/Hip Hop Dancing';
 
 $('.dropdown-item').click((ev) => {
 	var className = ev.target.className;
@@ -19,15 +25,23 @@ $('.btn-primary').click((ev) => {
 	switchModel($(ev.target).attr('data-title'));
 });
 
-$('.btn-faster').click(() => {
+$('.btn-faster').click(faster);
+function faster() {
+	console.log("faster");
 	time_delay += 0.3;
-});
-$('.btn-slower').click(() => {
+	audio.playbackRate = time_delay;
+	$('#speed').append('<img src="data/grellgelb.png" />');
+}
+$('.btn-slower').click(slower);
+function slower() {
+	console.log("slower");
 	if(time_delay > 0.3)
 		time_delay -= 0.3;
 	else
 		time_delay = 0;
-});
+	audio.playbackRate = time_delay;
+	$('#speed img').last().remove();
+}
 
 var timer = 0;
 setInterval(function() {
@@ -67,11 +81,6 @@ $('#showMessage').on("click", () => {
 });
 
 
-var markerRoot, loadCollada, avatar, audio;
-var angle = 180;
-
-var removeEntity;
-var modelpath = 'Archiv-Movements/Hip Hop Dancing';
 function switchModel(model) {
 	$('.title-bar').html(model);
 	modelpath = 'Archiv-Movements/' + model;
@@ -151,6 +160,7 @@ window.ARThreeOnLoad = function() {
 				var loader = new THREE.ColladaLoader();
 				console.log(modelpath);
 				loader.load('models/' + modelpath + '.dae', collada => {
+					//console.log(collada);
 					var animations = collada.animations;
 					//avatar.normalScale.x = 2;
 					//avatar.normalScale.y = 2;
@@ -195,12 +205,14 @@ window.ARThreeOnLoad = function() {
 				console.log("Marker is now " + (markerFixed ? "locked" : "free"));
 			}
 
-			/*
+			
 		if (annyang) {
 		// Let's define our first command. First the text we expect, and then the function it should call
 			var commands = {
 				'play': toggleMarkerFixed,
-				'stop': toggleMarkerFixed
+				'stop': toggleMarkerFixed,
+				'faster':faster, 
+				'slower':slower
 			};
 
 		// Add our commands to annyang
@@ -209,7 +221,7 @@ window.ARThreeOnLoad = function() {
 		// Start listening. You can call this here, or attach this call to an event, button, etc.
 			annyang.start();
 		}
-		*/
+		
 
 		document.getElementById("toggleMarkerFixedButton").onclick = toggleMarkerFixed;
 

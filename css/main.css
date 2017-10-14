@@ -65,7 +65,7 @@ canvas {
 	right:30px;
 	font-size:4em;
 	width: 100%;
-	color: #4FC3F7;
+	color: #F4EF73;
 	text-align: right;
 	font-weight:bold;
 	z-index: 100;
@@ -77,5 +77,9 @@ canvas {
 	right:30px;
 }
 #speed img {
+	width:50px;
+	margin:6px;
+	z-index:1;
+	height:50px;
 	float:left;
 }

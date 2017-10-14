@@ -4,6 +4,7 @@ html,body {
 	width: 100%;
 	font-family: 'Roboto Slab', serif;
 	height:100%;
+	overflow:hidden;
 }
 .row {
 	background-color:#efefef;
@@ -24,6 +25,7 @@ canvas {
 }
 .col {
 	padding:0 !important;
+	overflow-y:scroll;
 }
 .switch-content {
 	display:none;
@@ -68,4 +70,12 @@ canvas {
 	font-weight:bold;
 	z-index: 100;
 	display:block;
+}
+#speed {
+	position: absolute;
+	bottom:20px;
+	right:30px;
+}
+#speed img {
+	float:left;
 }

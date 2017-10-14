@@ -14,26 +14,35 @@ $('.dropdown-item').click((ev) => {
  }
 });
 
+$('.dance-content').css({"display": "block"});
 $('.btn-primary').click((ev) => {
 	switchModel($(ev.target).attr('data-title'));
 });
 
+$('.btn-faster').click(() => {
+	time_delay += 0.3;
+});
+$('.btn-slower').click(() => {
+	if(time_delay > 0.3)
+		time_delay -= 0.3;
+	else
+		time_delay = 0;
+});
+
 var timer = 0;
 setInterval(function() {
-	$('#timer').html((""+timer++).toHHMMSS());
+	$('#timer').html((""+timer++).toMMSS());
 }, 1000);
 
 
-String.prototype.toHHMMSS = function () {
+String.prototype.toMMSS = function () {
     var sec_num = parseInt(this, 10); // don't forget the second param
-    var hours   = Math.floor(sec_num / 3600);
-    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+    var minutes = Math.floor(sec_num / 60);
+    var seconds = sec_num -(minutes * 60);
 
-    if (hours   < 10) {hours   = "0"+hours;}
     if (minutes < 10) {minutes = "0"+minutes;}
     if (seconds < 10) {seconds = "0"+seconds;}
-    return hours+':'+minutes+':'+seconds;
+    return minutes+':'+seconds;
 }
 
 // scale

@@ -11,7 +11,7 @@ window.ARThreeOnLoad = function() {
 		var clock = new THREE.Clock();
 		var mixer;
 		var camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 10000);
-		camera.position.set(5, 0, 13);
+		camera.position.set(5, 0, 13); //TODO useless, remove?
 
 		var renderer = new THREE.WebGLRenderer({antialias: true});
 		if (arController.orientation === 'portrait') {
@@ -42,36 +42,41 @@ window.ARThreeOnLoad = function() {
 
 		function loadCollada(markerRoot) {
 			var loader = new THREE.ColladaLoader();
-                loader.load('models/Overhead Squat.dae', function (collada) {
-                    var animations = collada.animations;
-					var avatar = collada.scene;
-					collada.scene.traverse(function(child) {
-						if(child instanceof THREE.Mesh) {
-							console.log(child.material);
-							child.material.transparent = true;
-							child.material.opacity = 0.5;
-						}
-					});
+			loader.load('models/Overhead Squat.dae', collada => {
+				var animations = collada.animations;
+				var avatar = collada.scene;
+				collada.scene.traverse(child => {
+					if(child instanceof THREE.Mesh) {
+						console.log(child.material);
+						child.material.transparent = true;
+						child.material.opacity = 0.5;
+					}});
 
-					console.log(avatar);
-					mixer = new THREE.AnimationMixer(avatar);
-					
-					var animation = animations[0];
-					var action = mixer.clipAction(animations[0]).play();
-                    markerRoot.add(avatar);
-                });
+				console.log(avatar);
+				// avatar.position.add(new THREE.Vector3(0,-12,0));
+				// avatar.scale.multiplyScalar(15);
+				// avatar.rotateX(-0.1);
+				mixer = new THREE.AnimationMixer(avatar);
+
+				var animation = animations[0];
+				var action = mixer.clipAction(animations[0]).play();
+				markerRoot.add(avatar);
+			});
 		}
 
 		var markerRoot;
 		arController.loadMarker('data/patt.hiro', function(markerId) {
-            var markerRoot = arController.createThreeMarker(markerId);
-            loadCollada(markerRoot);
-            arScene.scene.add(markerRoot);
-        });
-        
-         arController.addEventListener('getMarker', function (ev) {
-            //console.log('found marker?', ev.data.marker.pos);
-        });
+			var markerRoot = arController.createThreeMarker(markerId);
+			// TODO variable offset for different characters here
+			console.log("PHILIPP");
+			console.log(markerRoot);
+			loadCollada(markerRoot);
+			arScene.scene.add(markerRoot);
+		});
+
+		arController.addEventListener('getMarker', function (ev) {
+			//console.log('found marker?', ev.data.marker.pos);
+		});
 
 		var markerFixed = false;
 
@@ -80,18 +85,18 @@ window.ARThreeOnLoad = function() {
 			console.log("Marker is now " + (markerFixed ? "locked" : "free"));
 		}
 
-/*
+		/*
 		if (annyang) {
-			// Let's define our first command. First the text we expect, and then the function it should call
+		// Let's define our first command. First the text we expect, and then the function it should call
 			var commands = {
 				'play': toggleMarkerFixed,
 				'stop': toggleMarkerFixed
 			};
 
-			// Add our commands to annyang
+		// Add our commands to annyang
 			annyang.addCommands(commands);
 
-			// Start listening. You can call this here, or attach this call to an event, button, etc.
+		// Start listening. You can call this here, or attach this call to an event, button, etc.
 			annyang.start();
 		}*/
 

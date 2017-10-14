@@ -2,10 +2,52 @@
 
 var time_delay = 1;
 
+
+$('.dropdown-item').click((ev) => {
+ var className = ev.target.className;
+ if (className.indexOf('yoga') > -1) {
+	 switchCategory('yoga');
+ } else if (className.indexOf('dance') > -1) {
+	switchCategory('dance');
+ } else if(className.indexOf('muscles') > -1) {
+	switchCategory('muscles');
+ }
+});
+
+$('.btn-primary').click((ev) => {
+	switchModel($(ev.target).attr('data-title'));
+});
+
+var markerRoot, loadCollada;
+
+var removeEntity;
+var modelpath = 'Archiv-Movements/Hip Hop Dancing';
+function switchModel(model) {
+	modelpath = 'Archiv-Movements/' + model;
+	removeEntity(modelpath);
+	loadCollada(markerRoot);
+}
+
+function switchCategory(category) {
+	$('.switch-content').css({"display": "none"});
+	$('.'+category+'-content').css({"display": "block"});
+}
+
+
 window.ARThreeOnLoad = function() {
 
-	ARController.getUserMediaThreeScene({cameraParam: 'data/camera_para-iPhone 6 Plus rear 1280x720 0.3m.dat', 
+	ARController.getUserMediaThreeScene({cameraParam: 'data/camera_para.dat', 
 	onSuccess: function(arScene, arController, arCamera) {
+		
+		removeEntity = function(objectName) {
+			var selectedObject = arScene.scene.getObjectByName(objectName);
+			console.log(arScene.scene);
+			console.log(selectedObject);
+			arScene.scene.remove( selectedObject );
+			console.log(arScene.scene);
+		}
+
+
 
 		document.body.className = arController.orientation;
 		var clock = new THREE.Clock();
@@ -40,17 +82,17 @@ window.ARThreeOnLoad = function() {
 						side: THREE.DoubleSide
 					}); 
 
-		function loadCollada(markerRoot) {
+		loadCollada = function(markerRoot) {
 			var loader = new THREE.ColladaLoader();
-			loader.load('models/Overhead Squat.dae', collada => {
+      loader.load( 'models/' + modelpath + '.dae', function (collada) {
 				var animations = collada.animations;
 				var avatar = collada.scene;
 				collada.scene.traverse(child => {
 					if(child instanceof THREE.Mesh) {
-						console.log(child.material);
 						child.material.transparent = true;
+						console.log(child.material);
 						child.material.opacity = 0.5;
-					}});
+			}});
 
 				console.log(avatar);
 				// avatar.position.add(new THREE.Vector3(0,-12,0));
@@ -64,12 +106,8 @@ window.ARThreeOnLoad = function() {
 			});
 		}
 
-		var markerRoot;
 		arController.loadMarker('data/patt.hiro', function(markerId) {
 			var markerRoot = arController.createThreeMarker(markerId);
-			// TODO variable offset for different characters here
-			console.log("PHILIPP");
-			console.log(markerRoot);
 			loadCollada(markerRoot);
 			arScene.scene.add(markerRoot);
 		});
@@ -98,7 +136,8 @@ window.ARThreeOnLoad = function() {
 
 		// Start listening. You can call this here, or attach this call to an event, button, etc.
 			annyang.start();
-		}*/
+		}
+		*/
 
 		document.getElementById("toggleMarkerFixedButton").onclick = toggleMarkerFixed;
 

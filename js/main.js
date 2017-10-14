@@ -138,13 +138,21 @@ window.ARThreeOnLoad = function() {
 			});
 
 			loadCollada = function(markerRoot) {
-				if(!!avatar) avatar.visible = false;	
+				var oldScale;
+				var oldRotation;
+				if(!!avatar) { 
+					avatar.visible = false;	
+					oldScale = avatar.scale;
+					oldRotation = avatar.rotation;
+				}
+				//TODO reset speed?
+				time_delay = 1;
+				// FIXME audio.set
+
 				var loader = new THREE.ColladaLoader();
 				console.log(modelpath);
 				loader.load('models/' + modelpath + '.dae', collada => {
 					var animations = collada.animations;
-					//avatar.normalScale.x = 2;
-					//avatar.normalScale.y = 2;
 					avatar = collada.scene;
 					avatar.name = modelpath;
 					collada.scene.traverse(child => {
@@ -154,9 +162,12 @@ window.ARThreeOnLoad = function() {
 							child.material.opacity = 0.5;
 						}});
 
-
-
 					console.log(avatar);
+					avatar.position.y -= 1;
+					
+					if(!!oldScale) avatar.scale.copy(oldScale);
+					if(!!oldRotation) avatar.rotation.copy(oldRotation);
+
 					mixer = new THREE.AnimationMixer(avatar);
 
 					var animation = animations[0];

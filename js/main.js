@@ -6,6 +6,10 @@ window.ARThreeOnLoad = function() {
 	onSuccess: function(arScene, arController, arCamera) {
 
 		document.body.className = arController.orientation;
+		var clock = new THREE.Clock();
+		var mixer;
+		var camera = new THREE.PerspectiveCamera( 25, window.innerWidth / window.innerHeight, 1, 10000 );
+		camera.position.set( 5, 0, 13 );
 
 		var renderer = new THREE.WebGLRenderer({antialias: true});
 		if (arController.orientation === 'portrait') {
@@ -24,46 +28,27 @@ window.ARThreeOnLoad = function() {
 
 		document.body.insertBefore(renderer.domElement, document.body.firstChild);
 
-
-		function loadFbx(markerRoot) {
-			// model
-			var manager = new THREE.LoadingManager();
-			manager.onProgress = function( item, loaded, total ) {
-				console.log( item, loaded, total );
-			};
-			var onProgress = function( xhr ) {
-				if ( xhr.lengthComputable ) {
-					var percentComplete = xhr.loaded / xhr.total * 100;
-					console.log( Math.round( percentComplete, 2 ) + '% downloaded' );
-				}
-			};
-			var onError = function( xhr ) {
-				console.error( xhr );
-			};
-			var loader = new THREE.FBXLoader( manager );
-			loader.load( 'models/fbx/xsi_man_skinning.fbx', function( object ) {
-				object.scale.x = 0.1;
-				object.scale.y = 0.1;
-				object.scale.z = 0.1;
-				//object.mixer = new THREE.AnimationMixer( object );
-				//mixers.push( object.mixer );
-				//var action = object.mixer.clipAction( object.animations[ 0 ] );
-				//action.play();
-				markerRoot.add(object);
-			}, onProgress, onError );
-
+		function loadCollada(markerRoot) {
+			var loader = new THREE.ColladaLoader();
+                loader.load( 'models/stormtrooper/stormtrooper.dae', function ( collada ) {
+                    var animations = collada.animations;
+					var avatar = collada.scene;
+					mixer = new THREE.AnimationMixer( avatar );
+					
+					var animation = animations[0];
+					var action = mixer.clipAction( animations[ 0 ] ).play();
+                    markerRoot.add( avatar );
+                });
 		}
 
 		arController.loadMarker('data/patt.hiro', function(markerId) {
             var markerRoot = arController.createThreeMarker(markerId);
-            console.log(markerRoot);
-            //markerRoot.add(sphere);   
-            loadFbx(markerRoot);
+            loadCollada(markerRoot);
             arScene.scene.add(markerRoot);
         });
         
          arController.addEventListener('getMarker', function (ev) {
-            console.log('found marker?', ev);
+            //console.log('found marker?', ev.data.marker.pos);
         });
 
 		var tick = function() {
@@ -71,6 +56,21 @@ window.ARThreeOnLoad = function() {
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
+		animate();	
+
+		function animate() {
+			requestAnimationFrame( animate );
+			render();
+			//stats.update();
+		}
+
+		function render() {
+			var delta = clock.getDelta();
+			if ( mixer !== undefined ) {
+				mixer.update( delta );
+			}
+			renderer.render( arScene, camera );
+		}
 
 		tick();
 

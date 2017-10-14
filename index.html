@@ -3,9 +3,20 @@
 	<title>Let's dance</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 	<link rel="stylesheet" type="text/css" href="css/main.css"/>
+	<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
 </head>
 <body>
-
+	<div class="row align-items-start">
+		<div class="col col-2 menu">
+			asdf
+		</div>
+		<div class="col col-8" id="container">
+		</div>
+		<div class="col col-2 menu">
+			asdf
+		</div>
+	</div>
+	
 
 	<!-- Plugins -->
 	<script src="node_modules/jquery/dist/jquery.min.js"></script>
@@ -14,9 +25,13 @@
 	<script src="js/plugins/artoolkit.three.js"></script>
 	<script src="js/plugins/FBXLoader.js"></script>
 	<script src="js/plugins/ColladaLoader2.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+	<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!--<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>-->
 
 	<!-- Core -->
 	<script src="js/main.js"></script>
+	<script src="js/ui.js"></script>
 
 	<div><button id="toggleMarkerFixedButton">Toggle Marker</button></div>
 </body>

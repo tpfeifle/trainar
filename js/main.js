@@ -54,20 +54,31 @@ window.ARThreeOnLoad = function() {
 
 		}
 
+		var markerRoot;
 		arController.loadMarker('data/patt.hiro', function(markerId) {
-            var markerRoot = arController.createThreeMarker(markerId);
+            markerRoot = arController.createThreeMarker(markerId);
             console.log(markerRoot);
             //markerRoot.add(sphere);   
             loadFbx(markerRoot);
             arScene.scene.add(markerRoot);
         });
         
-         arController.addEventListener('getMarker', function (ev) {
-            console.log('found marker?', ev);
+        arController.addEventListener('getMarker', function (ev) {
+            // console.log('found marker?', ev);
         });
 
+		var markerFixed = false;
+
+		function toggleMarkerFixed() {
+			markerFixed = !markerFixed;
+			console.log("Marker is now " + (markerFixed ? "locked" : "free"));
+		}
+
+		document.getElementById("toggleMarkerFixedButton").onclick = () => toggleMarkerFixed();
+
 		var tick = function() {
-			arScene.process();
+			if(!markerFixed) // hack, watch out
+				arScene.process();
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};

@@ -5,11 +5,14 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css"/>
 	<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
 	<link rel="stylesheet" type="text/css" href="node_modules/bootstrap-slider/dist/css/bootstrap-slider.min.css"/>
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
 </head>
 <body>
+	<div class="title-bar">
+		Hip-Hop Dance
+	</div>
 	<div class="row align-items-start">
 		<div class="col col-2 menu">
-				
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -66,18 +69,20 @@
 			</div>
 		</div>
 		<div class="col col-8" id="container">
+			<!-- here the video gets loaded -->
 		</div>
 		<div class="col col-2 menu">
-			<input
-				type="text"
-				class="slider"
-				name="somename"
-				data-provide="slider"
-				data-slider-min="1"
-				data-slider-max="10"
-				data-slider-step="1"
-				data-slider-value="5"
-				data-slider-tooltip="hide">
+			<form>
+			<div class="form-group">
+				<label for="exampleInputEmail1">Scale</label>
+				<input id="slider1" class="form-control" id="exampleInputEmail1" type="range" min="1" max="100" step="1" />
+			</div>
+			<div class="form-group">
+				<label for="exampleInputRotate">Rotate</label>
+				<input id="slider2" class="form-control" id="exampleInputRotate" value="180" type="range" min="1" max="360" step="1" />
+			</div>
+			</form>
+			
 			<div><button class="btn btn-primary" id="toggleMarkerFixedButton">Toggle Marker</button></div>
 		</div>
 	</div>

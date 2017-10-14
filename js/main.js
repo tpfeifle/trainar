@@ -119,6 +119,7 @@ window.ARThreeOnLoad = function() {
 					}); 
 
 		loadCollada = function(markerRoot) {
+			if(!!avatar) avatar.visible = false;	
 			var loader = new THREE.ColladaLoader();
 			console.log(modelpath);
                 loader.load( 'models/' + modelpath + '.dae', function ( collada ) {

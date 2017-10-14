@@ -31,6 +31,15 @@ $('#slider2').on("change", () => {
 	console.log(angle);
 });
 
+$('#showMessage').on("click", () => {
+	var messages = ["Awesome", "Keep it up", "Impressive"];
+	$('#info').html(messages[Math.floor(Math.random() * (messages.length))])
+	$('#info').css({"opacity": 1, left: Math.random()*300 + 'px', top: Math.random()*300 + 'px'});
+	setTimeout(function() {
+		$('#info').css({"opacity": 0, left: 0, top: 0});
+	}, 1000);
+});
+
 
 var markerRoot, loadCollada, avatar, audio;
 var angle = 180;
@@ -151,12 +160,14 @@ window.ARThreeOnLoad = function() {
 		arController.loadMarker('data/patt.hiro', function(markerId) {
 			markerRoot = arController.createThreeMarker(markerId);
 			loadCollada(markerRoot);
-			arScene.scene.add(markerRoot);
+			arScene.scene.add(markerRoot);	
 		});
 
 		arController.addEventListener('getMarker', function (ev) {
 			//console.log('found marker?', ev.data.marker.pos);
 		});
+
+		
 
 		var markerFixed = false;
 

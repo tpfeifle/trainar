@@ -2,6 +2,7 @@ html,body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
+	font-family: 'Roboto Slab', serif;
 	height:100%;
 }
 .row {
@@ -26,4 +27,19 @@ canvas {
 }
 .switch-content {
 	display:none;
+}
+.title-bar {
+	position: absolute;
+	padding:10px 20px;
+	background-color:white;
+	opacity:0.5;
+	left: 50%;
+	transform: translate(-50%, 0);
+	font-family: 'Roboto Slab', serif;
+	z-index:1;
+	margin-top:10px;
+	border-radius:10px;
+	color:black;
+	font-size:1.6em;
+	font-weight:bold;
 }

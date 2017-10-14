@@ -19,22 +19,33 @@ $('.btn-primary').click((ev) => {
 });
 
 
-// Instantiate a slider
-var mySlider = $("input.slider").bootstrapSlider();
-mySlider.on("change", (obj) => {
-	
-	scaleScene(mySlider.slider('getValue'));
+// scale
+$('#slider1').on("change", () => {
+	scaleScene($('#slider1').val());
+});
+
+//rotate
+$('#slider2').on("change", () => {
+	rotateScene($('#slider2').val());
+	angle = $('#slider2').val();
+	console.log(angle);
 });
 
 
-var markerRoot, loadCollada, avatar;
+var markerRoot, loadCollada, avatar, audio;
+var angle = 180;
 
 var removeEntity;
 var modelpath = 'Archiv-Movements/Hip Hop Dancing';
 function switchModel(model) {
+	$('.title-bar').html(model);
 	modelpath = 'Archiv-Movements/' + model;
 	removeEntity(modelpath);
 	loadCollada(markerRoot);
+	if(!!audio)
+		audio.pause();
+	audio = new Audio('models/mp3/'+ model +'.mp3');
+	audio.play();
 }
 
 function switchCategory(category) {
@@ -42,12 +53,19 @@ function switchCategory(category) {
 	$('.'+category+'-content').css({"display": "block"});
 }
 
+function rotateScene(angle) {
+	if(!!avatar) {
+		avatar.rotation.set(avatar.rotation.x, avatar.rotation.y+angle, avatar.rotation.z);
+	}
+}
 
 function scaleScene(scale) {
 	//scale = 0.01*scale;
 	console.log(scale);
 	if(!!avatar) {
-		avatar.scale.multiplyScalar(0.2*scale); //(scale, scale, scale); //(scale); //x = scale; // = new THREE.Vector3(scale, scale, scale);
+		avatar.scale.setX(0.001 +(scale*0.0002)); //(scale, scale, scale); //(scale); //x = scale; // = new THREE.Vector3(scale, scale, scale);
+		avatar.scale.setY(0.001 +(scale*0.0002));
+		avatar.scale.setZ(0.001 +(scale*0.0002));
 		//avatar.normalScale.y = scale;
 	}
 }

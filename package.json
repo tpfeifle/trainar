@@ -19,6 +19,7 @@
   "homepage": "https://gitlab.com/tpfeifle/iNTUition#README",
   "dependencies": {
     "connect": "^3.6.5",
+    "jquery": "^3.2.1",
     "serve-static": "^1.13.1"
   }
 }

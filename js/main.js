@@ -21,18 +21,39 @@ window.ARThreeOnLoad = function() {
 			if (/Android|mobile|iPad|iPhone/i.test(navigator.userAgent)) {
 				renderer.setSize(window.innerWidth, (window.innerWidth / arController.videoWidth) * arController.videoHeight);
 			} else {
+				arController.videoHeight *= 2;
+				arController.videoWidth *= 2;
 				renderer.setSize(arController.videoWidth, arController.videoHeight);
 				document.body.className += ' desktop';
 			}
 		}
 
 		document.body.insertBefore(renderer.domElement, document.body.firstChild);
+		var ambientLight = new THREE.AmbientLight( 0xffffff, 0.2 );
+		arScene.scene.add(ambientLight);
+
+		var material	= new THREE.MeshNormalMaterial({
+						transparent : true,
+						opacity: 0.5,
+						side: THREE.DoubleSide
+					}); 
 
 		function loadCollada(markerRoot) {
 			var loader = new THREE.ColladaLoader();
-                loader.load( 'models/stormtrooper/stormtrooper.dae', function ( collada ) {
+                loader.load( 'models/Overhead Squat.dae', function ( collada ) {
                     var animations = collada.animations;
 					var avatar = collada.scene;
+					collada.scene.traverse( function ( child ) {
+						if ( child instanceof THREE.Mesh ) {
+							console.log(child.material);
+							child.material.transparent = true;
+							child.material.opacity = 0.5;
+						}
+					} );
+					
+					
+
+					console.log(avatar);
 					mixer = new THREE.AnimationMixer( avatar );
 					
 					var animation = animations[0];

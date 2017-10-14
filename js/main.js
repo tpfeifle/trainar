@@ -4,7 +4,7 @@ var time_delay = 1;
 
 window.ARThreeOnLoad = function() {
 
-	ARController.getUserMediaThreeScene({cameraParam: 'data/camera_para.dat', 
+	ARController.getUserMediaThreeScene({cameraParam: 'data/camera_para-iPhone 6 Plus rear 1280x720 0.3m.dat', 
 	onSuccess: function(arScene, arController, arCamera) {
 
 		document.body.className = arController.orientation;
@@ -29,8 +29,8 @@ window.ARThreeOnLoad = function() {
 				document.body.className += ' desktop';
 			}
 		}
+		$('#container').append(renderer.domElement);
 
-		document.body.insertBefore(renderer.domElement, document.body.firstChild);
 		var ambientLight = new THREE.AmbientLight( 0xffffff, 0.2 );
 		arScene.scene.add(ambientLight);
 
@@ -80,7 +80,22 @@ window.ARThreeOnLoad = function() {
 			console.log("Marker is now " + (markerFixed ? "locked" : "free"));
 		}
 
-		document.getElementById("toggleMarkerFixedButton").onclick = () => toggleMarkerFixed();
+/*
+		if (annyang) {
+			// Let's define our first command. First the text we expect, and then the function it should call
+			var commands = {
+				'play': toggleMarkerFixed,
+				'stop': toggleMarkerFixed
+			};
+
+			// Add our commands to annyang
+			annyang.addCommands(commands);
+
+			// Start listening. You can call this here, or attach this call to an event, button, etc.
+			annyang.start();
+		}*/
+
+		document.getElementById("toggleMarkerFixedButton").onclick = toggleMarkerFixed;
 
 		var tick = function() {
 			if(!markerFixed) // hack, watch out

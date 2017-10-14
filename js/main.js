@@ -16,7 +16,16 @@ $('.btn-primary').click((ev) => {
 	switchModel($(ev.target).attr('data-title'));
 });
 
-var markerRoot, loadCollada;
+
+// Instantiate a slider
+var mySlider = $("input.slider").bootstrapSlider();
+mySlider.on("change", (obj) => {
+	
+	scaleScene(mySlider.slider('getValue'));
+});
+
+
+var markerRoot, loadCollada, avatar;
 
 var removeEntity;
 var modelpath = 'Archiv-Movements/Hip Hop Dancing';
@@ -32,6 +41,14 @@ function switchCategory(category) {
 }
 
 
+function scaleScene(scale) {
+	//scale = 0.01*scale;
+	console.log(scale);
+	if(!!avatar) {
+		avatar.scale.multiplyScalar(0.2*scale); //(scale, scale, scale); //(scale); //x = scale; // = new THREE.Vector3(scale, scale, scale);
+		//avatar.normalScale.y = scale;
+	}
+}
 window.ARThreeOnLoad = function() {
 
 	ARController.getUserMediaThreeScene({cameraParam: 'data/camera_para.dat', 
@@ -39,6 +56,7 @@ window.ARThreeOnLoad = function() {
 		
 		removeEntity = function(objectName) {
 			var selectedObject = arScene.scene.getObjectByName(objectName);
+			//selectedObject.position.add(new THREE.Vector3(-1000, 0, 0));
 			console.log(arScene.scene);
 			console.log(selectedObject);
 			arScene.scene.remove( selectedObject );
@@ -82,9 +100,12 @@ window.ARThreeOnLoad = function() {
 
 		loadCollada = function(markerRoot) {
 			var loader = new THREE.ColladaLoader();
+			console.log(modelpath);
                 loader.load( 'models/' + modelpath + '.dae', function ( collada ) {
-                    var animations = collada.animations;
-					var avatar = collada.scene;
+					var animations = collada.animations;
+					//avatar.normalScale.x = 2;
+					//avatar.normalScale.y = 2;
+					avatar = collada.scene;
 					avatar.name = modelpath;
 					collada.scene.traverse( function ( child ) {
 						if ( child instanceof THREE.Mesh ) {
@@ -101,6 +122,8 @@ window.ARThreeOnLoad = function() {
 					
 					var animation = animations[0];
 					var action = mixer.clipAction(animations[0]).play();
+					console.log(markerRoot);
+					
                     markerRoot.add(avatar);
                 });
 		}

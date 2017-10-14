@@ -69,14 +69,8 @@ function rotateScene(angle) {
 }
 
 function scaleScene(scale) {
-	//scale = 0.01*scale;
-	console.log(scale);
-	if(!!avatar) {
-		avatar.scale.setX(0.001 +(scale*0.0002)); //(scale, scale, scale); //(scale); //x = scale; // = new THREE.Vector3(scale, scale, scale);
-		avatar.scale.setY(0.001 +(scale*0.0002));
-		avatar.scale.setZ(0.001 +(scale*0.0002));
-		//avatar.normalScale.y = scale;
-	}
+	if(!!avatar)
+		avatar.scale.setScalar(0.001 + (scale * 0.0002));
 }
 window.ARThreeOnLoad = function() {
 
@@ -128,6 +122,7 @@ window.ARThreeOnLoad = function() {
 					}); 
 
 		loadCollada = function(markerRoot) {
+			if(!!avatar) avatar.visible = false;	
 			var loader = new THREE.ColladaLoader();
 			console.log(modelpath);
                 loader.load( 'models/' + modelpath + '.dae', function ( collada ) {

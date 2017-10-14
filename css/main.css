@@ -43,3 +43,17 @@ canvas {
 	font-size:1.6em;
 	font-weight:bold;
 }
+#info {
+	position: absolute;
+	top: 80px;
+	font-size:4em;
+	font-family: 'Concert One', cursive;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	width: 100%;
+	color: yellow;
+	font-weight:bold;
+	text-align: center;
+	opacity:0;
+	z-index: 100;
+	display:block;
+}

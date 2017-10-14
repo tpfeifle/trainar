@@ -31,6 +31,15 @@ $('#slider2').on("change", () => {
 	console.log(angle);
 });
 
+$('#showMessage').on("click", () => {
+	var messages = ["Awesome", "Keep it up", "Impressive"];
+	$('#info').html(messages[Math.floor(Math.random() * (messages.length))])
+	$('#info').css({"opacity": 1, left: Math.random()*300 + 'px', top: Math.random()*300 + 'px'});
+	setTimeout(function() {
+		$('#info').css({"opacity": 0, left: 0, top: 0});
+	}, 1000);
+});
+
 
 var markerRoot, loadCollada, avatar, audio;
 var angle = 180;
@@ -60,14 +69,8 @@ function rotateScene(angle) {
 }
 
 function scaleScene(scale) {
-	//scale = 0.01*scale;
-	console.log(scale);
-	if(!!avatar) {
-		avatar.scale.setX(0.001 +(scale*0.0002)); //(scale, scale, scale); //(scale); //x = scale; // = new THREE.Vector3(scale, scale, scale);
-		avatar.scale.setY(0.001 +(scale*0.0002));
-		avatar.scale.setZ(0.001 +(scale*0.0002));
-		//avatar.normalScale.y = scale;
-	}
+	if(!!avatar)
+		avatar.scale.setScalar(0.001 + (scale * 0.0002));
 }
 window.ARThreeOnLoad = function() {
 
@@ -119,6 +122,7 @@ window.ARThreeOnLoad = function() {
 					});
 
 		loadCollada = function(markerRoot) {
+			if(!!avatar) avatar.visible = false;	
 			var loader = new THREE.ColladaLoader();
 			console.log(modelpath);
                 loader.load( 'models/' + modelpath + '.dae', function ( collada ) {
@@ -151,12 +155,14 @@ window.ARThreeOnLoad = function() {
 		arController.loadMarker('data/patt.hiro', function(markerId) {
 			markerRoot = arController.createThreeMarker(markerId);
 			loadCollada(markerRoot);
-			arScene.scene.add(markerRoot);
+			arScene.scene.add(markerRoot);	
 		});
 
 		arController.addEventListener('getMarker', function (ev) {
 			//console.log('found marker?', ev.data.marker.pos);
 		});
+
+		
 
 		var markerFixed = false;
 

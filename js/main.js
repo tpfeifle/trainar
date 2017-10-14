@@ -1,5 +1,7 @@
 'use strict';
 
+var time_delay = 1;
+
 window.ARThreeOnLoad = function() {
 
 	ARController.getUserMediaThreeScene({cameraParam: 'data/camera_para.dat', 
@@ -32,7 +34,7 @@ window.ARThreeOnLoad = function() {
 		var ambientLight = new THREE.AmbientLight( 0xffffff, 0.2 );
 		arScene.scene.add(ambientLight);
 
-		var material	= new THREE.MeshNormalMaterial({
+		var material = new THREE.MeshNormalMaterial({
 						transparent : true,
 						opacity: 0.5,
 						side: THREE.DoubleSide
@@ -40,21 +42,19 @@ window.ARThreeOnLoad = function() {
 
 		function loadCollada(markerRoot) {
 			var loader = new THREE.ColladaLoader();
-                loader.load( 'models/Overhead Squat.dae', function ( collada ) {
+                loader.load('models/Overhead Squat.dae', function (collada) {
                     var animations = collada.animations;
 					var avatar = collada.scene;
-					collada.scene.traverse( function ( child ) {
-						if ( child instanceof THREE.Mesh ) {
+					collada.scene.traverse(function(child) {
+						if(child instanceof THREE.Mesh) {
 							console.log(child.material);
 							child.material.transparent = true;
 							child.material.opacity = 0.5;
 						}
-					} );
-					
-					
+					});
 
 					console.log(avatar);
-					mixer = new THREE.AnimationMixer( avatar );
+					mixer = new THREE.AnimationMixer(avatar);
 					
 					var animation = animations[0];
 					var action = mixer.clipAction(animations[0]).play();
@@ -97,7 +97,7 @@ window.ARThreeOnLoad = function() {
 		}
 
 		function render() {
-			var delta = clock.getDelta();
+			var delta = clock.getDelta() * time_delay;
 			if (mixer !== undefined) {
 				mixer.update(delta);
 			}

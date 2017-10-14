@@ -8,8 +8,8 @@ window.ARThreeOnLoad = function() {
 		document.body.className = arController.orientation;
 		var clock = new THREE.Clock();
 		var mixer;
-		var camera = new THREE.PerspectiveCamera( 25, window.innerWidth / window.innerHeight, 1, 10000 );
-		camera.position.set( 5, 0, 13 );
+		var camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 10000);
+		camera.position.set(5, 0, 13);
 
 		var renderer = new THREE.WebGLRenderer({antialias: true});
 		if (arController.orientation === 'portrait') {
@@ -57,8 +57,8 @@ window.ARThreeOnLoad = function() {
 					mixer = new THREE.AnimationMixer( avatar );
 					
 					var animation = animations[0];
-					var action = mixer.clipAction( animations[ 0 ] ).play();
-                    markerRoot.add( avatar );
+					var action = mixer.clipAction(animations[0]).play();
+                    markerRoot.add(avatar);
                 });
 		}
 
@@ -91,17 +91,17 @@ window.ARThreeOnLoad = function() {
 		animate();	
 
 		function animate() {
-			requestAnimationFrame( animate );
+			requestAnimationFrame(animate);
 			render();
 			//stats.update();
 		}
 
 		function render() {
 			var delta = clock.getDelta();
-			if ( mixer !== undefined ) {
-				mixer.update( delta );
+			if (mixer !== undefined) {
+				mixer.update(delta);
 			}
-			renderer.render( arScene, camera );
+			renderer.render(arScene, camera);
 		}
 
 		tick();

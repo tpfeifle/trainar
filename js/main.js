@@ -71,9 +71,9 @@ function scaleScene(scale) {
 }
 window.ARThreeOnLoad = function() {
 
-	ARController.getUserMediaThreeScene({cameraParam: 'data/camera_para.dat', 
+	ARController.getUserMediaThreeScene({cameraParam: 'data/camera_para.dat',
 	onSuccess: function(arScene, arController, arCamera) {
-		
+
 		removeEntity = function(objectName) {
 			var selectedObject = arScene.scene.getObjectByName(objectName);
 			//selectedObject.position.add(new THREE.Vector3(-1000, 0, 0));
@@ -101,8 +101,8 @@ window.ARThreeOnLoad = function() {
 			if (/Android|mobile|iPad|iPhone/i.test(navigator.userAgent)) {
 				renderer.setSize(window.innerWidth, (window.innerWidth / arController.videoWidth) * arController.videoHeight);
 			} else {
-				arController.videoHeight *= 2;
-				arController.videoWidth *= 2;
+				//arController.videoHeight *= 2;
+				//arController.videoWidth *= 2;
 				renderer.setSize(arController.videoWidth, arController.videoHeight);
 				document.body.className += ' desktop';
 			}
@@ -116,7 +116,7 @@ window.ARThreeOnLoad = function() {
 						transparent : true,
 						opacity: 0.5,
 						side: THREE.DoubleSide
-					}); 
+					});
 
 		loadCollada = function(markerRoot) {
 			var loader = new THREE.ColladaLoader();
@@ -134,16 +134,16 @@ window.ARThreeOnLoad = function() {
 							child.material.opacity = 0.5;
 						}
 					} );
-					
-					
+
+
 
 					console.log(avatar);
 					mixer = new THREE.AnimationMixer( avatar );
-					
+
 					var animation = animations[0];
 					var action = mixer.clipAction(animations[0]).play();
 					console.log(markerRoot);
-					
+
                     markerRoot.add(avatar);
                 });
 		}
@@ -189,7 +189,7 @@ window.ARThreeOnLoad = function() {
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
-		animate();	
+		animate();
 
 		function animate() {
 			requestAnimationFrame(animate);
@@ -216,6 +216,3 @@ window.ARThreeOnLoad = function() {
 if (window.ARController && ARController.getUserMediaThreeScene) {
 	ARThreeOnLoad();
 }
-
-
-

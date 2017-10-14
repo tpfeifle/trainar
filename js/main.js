@@ -41,6 +41,7 @@ window.ARThreeOnLoad = function() {
                 });
 		}
 
+		var markerRoot;
 		arController.loadMarker('data/patt.hiro', function(markerId) {
             var markerRoot = arController.createThreeMarker(markerId);
             loadCollada(markerRoot);
@@ -51,8 +52,18 @@ window.ARThreeOnLoad = function() {
             //console.log('found marker?', ev.data.marker.pos);
         });
 
+		var markerFixed = false;
+
+		function toggleMarkerFixed() {
+			markerFixed = !markerFixed;
+			console.log("Marker is now " + (markerFixed ? "locked" : "free"));
+		}
+
+		document.getElementById("toggleMarkerFixedButton").onclick = () => toggleMarkerFixed();
+
 		var tick = function() {
-			arScene.process();
+			if(!markerFixed) // hack, watch out
+				arScene.process();
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};

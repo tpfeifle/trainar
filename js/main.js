@@ -54,9 +54,8 @@ function switchCategory(category) {
 }
 
 function rotateScene(angle) {
-	if(!!avatar) {
-		avatar.rotation.set(avatar.rotation.x, avatar.rotation.y+angle, avatar.rotation.z);
-	}
+	if(!!avatar) 
+		avatar.rotation.y = -angle;
 }
 
 function scaleScene(scale) {

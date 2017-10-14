@@ -22,7 +22,9 @@ canvas {
 .desktop canvas {
  	transform: scale(-1, 1);
 }
-
-
-
-
+.col {
+	padding:0 !important;
+}
+.switch-content {
+	display:none;
+}

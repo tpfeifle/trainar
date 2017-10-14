@@ -18,7 +18,7 @@ $('.btn-primary').click((ev) => {
 	switchModel($(ev.target).attr('data-title'));
 });
 
-var markerRoot, loadCollada;
+var markerRoot, loadCollada, avatar;
 
 var removeEntity;
 var modelpath = 'Archiv-Movements/Hip Hop Dancing';
@@ -84,9 +84,9 @@ window.ARThreeOnLoad = function() {
 
 		loadCollada = function(markerRoot) {
 			var loader = new THREE.ColladaLoader();
-      loader.load( 'models/' + modelpath + '.dae', function (collada) {
+			loader.load( 'models/' + modelpath + '.dae', function (collada) {
 				var animations = collada.animations;
-				var avatar = collada.scene;
+				avatar = collada.scene;
 				collada.scene.traverse(child => {
 					if(child instanceof THREE.Mesh) {
 						child.material.transparent = true;
@@ -107,7 +107,7 @@ window.ARThreeOnLoad = function() {
 		}
 
 		arController.loadMarker('data/patt.hiro', function(markerId) {
-			var markerRoot = arController.createThreeMarker(markerId);
+			markerRoot = arController.createThreeMarker(markerId);
 			loadCollada(markerRoot);
 			arScene.scene.add(markerRoot);
 		});

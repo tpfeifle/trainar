@@ -1,5 +1,7 @@
 'use strict';
 
+var time_delay = 1;
+
 
 $('.dropdown-item').click((ev) => {
  var className = ev.target.className;
@@ -69,7 +71,7 @@ window.ARThreeOnLoad = function() {
 		var clock = new THREE.Clock();
 		var mixer;
 		var camera = new THREE.PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 10000);
-		camera.position.set(5, 0, 13);
+		camera.position.set(5, 0, 13); //TODO useless, remove?
 
 		var renderer = new THREE.WebGLRenderer({antialias: true});
 		if (arController.orientation === 'portrait') {
@@ -92,7 +94,7 @@ window.ARThreeOnLoad = function() {
 		var ambientLight = new THREE.AmbientLight( 0xffffff, 0.2 );
 		arScene.scene.add(ambientLight);
 
-		var material	= new THREE.MeshNormalMaterial({
+		var material = new THREE.MeshNormalMaterial({
 						transparent : true,
 						opacity: 0.5,
 						side: THREE.DoubleSide
@@ -129,14 +131,14 @@ window.ARThreeOnLoad = function() {
 		}
 
 		arController.loadMarker('data/patt.hiro', function(markerId) {
-            markerRoot = arController.createThreeMarker(markerId);
-            loadCollada(markerRoot);
-            arScene.scene.add(markerRoot);
-        });
-        
-         arController.addEventListener('getMarker', function (ev) {
-            //console.log('found marker?', ev.data.marker.pos);
-        });
+			markerRoot = arController.createThreeMarker(markerId);
+			loadCollada(markerRoot);
+			arScene.scene.add(markerRoot);
+		});
+
+		arController.addEventListener('getMarker', function (ev) {
+			//console.log('found marker?', ev.data.marker.pos);
+		});
 
 		var markerFixed = false;
 
@@ -145,20 +147,21 @@ window.ARThreeOnLoad = function() {
 			console.log("Marker is now " + (markerFixed ? "locked" : "free"));
 		}
 
-
+		/*
 		if (annyang) {
-			// Let's define our first command. First the text we expect, and then the function it should call
+		// Let's define our first command. First the text we expect, and then the function it should call
 			var commands = {
 				'play': toggleMarkerFixed,
 				'stop': toggleMarkerFixed
 			};
 
-			// Add our commands to annyang
+		// Add our commands to annyang
 			annyang.addCommands(commands);
 
-			// Start listening. You can call this here, or attach this call to an event, button, etc.
+		// Start listening. You can call this here, or attach this call to an event, button, etc.
 			annyang.start();
 		}
+		*/
 
 		document.getElementById("toggleMarkerFixedButton").onclick = toggleMarkerFixed;
 
@@ -177,7 +180,7 @@ window.ARThreeOnLoad = function() {
 		}
 
 		function render() {
-			var delta = clock.getDelta();
+			var delta = clock.getDelta() * time_delay;
 			if (mixer !== undefined) {
 				mixer.update(delta);
 			}

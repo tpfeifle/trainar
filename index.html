@@ -21,8 +21,8 @@
 			<div class="collapse navbar-collapse" id="navbarNavDropdown">
 				<ul class="navbar-nav">
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Select character type
+					<a class="nav-link dropdown-toggle" style="font-size:1.4em" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Select training
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item dance-link" href="#">Dance</a>
@@ -85,7 +85,7 @@
 			</div>
 			<!-- here the video gets loaded -->
 		</div>
-		<div class="col col-2 menu">
+		<div class="col col-2 menu" style="margin-top:15px;">
 			<form>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Scale</label>
@@ -97,10 +97,14 @@
 			</div>
 			</form>
 
-			<div><button class="btn" id="toggleMarkerFixedButton">Toggle Marker</button></div>
-			<div><button class="btn" id="showMessage">Applause</button></div>
-			<div><button class="btn btn-faster">Faster</button></div>
-			<div><button class="btn btn-slower">Slower</button></div>
+			<div class="center" style="margin-left:90px;"><button class="btn btn-lg" id="toggleMarkerFixedButton">⏯</button>
+				<button class="btn btn-lg" id="showMessage">👏</button></div>
+				<br />
+			
+			<div class="btn-group" role="group" aria-label="Basic example" style="width:100%; padding:5px;">
+				<button class="btn btn-slower btn-outline-danger" style="width:50%">Slower</button>
+				<button class="btn btn-faster btn-outline-success" style="width:50%">Faster</button>
+			</div>
 		</div>
 	</div>
 </div>

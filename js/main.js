@@ -72,7 +72,7 @@ $('#slider2').on("change", () => {
 });
 
 $('#showMessage').on("click", () => {
-	var messages = ["Awesome", "Keep it up", "Impressive"];
+	var messages = ["Awesome", "Keep it up", "Impressive", "One more round", "Looks good", "Nice!", "Like it"];
 	$('#info').html(messages[Math.floor(Math.random() * (messages.length))])
 	$('#info').css({"opacity": 1, left: Math.random()*300 + 'px', top: Math.random()*300 + 'px'});
 	setTimeout(function() {

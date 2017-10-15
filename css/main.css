@@ -11,8 +11,8 @@ html,body {
 }
 canvas {
 	padding:0;
-	width: 100% !important;
-	height: auto !important;
+	width: auto !important;
+	height: 100% !important;
 }
 .menu {
 	height:100%;
